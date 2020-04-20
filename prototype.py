@@ -112,14 +112,12 @@ class Game:
                 start -= dt
                 if start <= 0:
                     print("Caterinca!!!")
-                    
+
                     running = False
-                dt = clock.tick(1) / 1000
+                dt = clock.tick(40) / 1000
 
             pos = pygame.mouse.get_pos()
 
-            #self.window.blit(self.background, (0, 0))
-            #pygame.display.update()
             events = pygame.event.get()
             for event in events:
                 if event.type == pygame.QUIT:
@@ -132,20 +130,18 @@ class Game:
 
                 if event.type == pygame.KEYDOWN:
                     # if self.active and not self.end:
-                        if event.key == pygame.K_RETURN:
-                            enabled = True
-                            self.user_words.append(actual_word)
-                            actual_word = ''
-                            # print(self.input_words)
-                            # print(self.user_words)
+                    if event.key == pygame.K_RETURN:
+                        enabled = True
+                        self.user_words.append(actual_word)
+                        actual_word = ''
                             
-                        elif event.key == pygame.K_BACKSPACE:
-                            actual_word = actual_word[:-1]
-                        else:
-                            try:
-                                actual_word += event.unicode
-                            except:
-                                pass
+                    elif event.key == pygame.K_BACKSPACE:
+                        actual_word = actual_word[:-1]
+                    else:
+                        try:
+                            actual_word += event.unicode
+                        except:
+                            pass
 
         pygame.display.update()
     
