@@ -16,7 +16,11 @@ class button():
         self.height = height
         self.text = text
 
-    def draw(self, window):
+    def draw(self, window, outline = None):
+        #Call this method to draw the button on the screen
+        if outline:
+            pygame.draw.rect(window, outline, (self.x - 2, self.y - 2, self.width + 4, self.height + 4), 0)
+            
         pygame.draw.rect(window, self.color, (self.x, self.y, self.width, self.height), 0)
         
         if self.text != '':
@@ -109,7 +113,7 @@ class Game:
                 if event.type == pygame.MOUSEMOTION:
                     pass
                 clock = pygame.time.Clock()
-                self.draw_text((230, 230, 0), "Caterinca", (400, 200))
+                # self.draw_text((230, 230, 0), "Caterinca", (400, 200))
                 if event.type == pygame.QUIT:
                     running = False
                     pygame.quit()
