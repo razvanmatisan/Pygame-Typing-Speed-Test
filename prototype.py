@@ -16,11 +16,7 @@ class button():
         self.height = height
         self.text = text
 
-    def draw(self, window, outline = None):
-        #Call this method to draw the button on the screen
-        if outline:
-            pygame.draw.rect(window, outline, (self.x - 2, self.y - 2, self.width + 4, self.height + 4), 0)
-            
+    def draw(self, window):
         pygame.draw.rect(window, self.color, (self.x, self.y, self.width, self.height), 0)
         
         if self.text != '':
@@ -29,7 +25,6 @@ class button():
             window.blit(text, (self.x + (self.width / 2 - text.get_width() / 2), self.y + (self.height / 2 - text.get_height() / 2)))
 
     def isOver(self, pos):
-        #Pos is the mouse position or a tuple of (x, y) coordinates
         if pos[0] > self.x and pos[0] < self.x + self.width and pos[1] > self.y and pos[1] < self.y + self.height:
             return True
         return False
@@ -62,13 +57,12 @@ class Game:
         self.reset_game()
 
         while self.running:
-            # Game logic happens here
             self.first_page()
 
     def first_page(self):
         self.window.blit(self.background, (0, 0))
         start_button = button(RED, 310, 265, 200, 100, "Start")
-        #self.set_button(RED, 310, 265, 200, 100, "Start")
+
         start_button.draw(self.window, (0, 0, 0))
         pos = pygame.mouse.get_pos()
 
@@ -89,26 +83,38 @@ class Game:
         self.window.blit(self.background, (0, 0))
         pygame.display.update()
 
+        clock = pygame.time.Clock()
+        start = 60
+        dt = 0
+
         running = True
         while running:
-            # update the text of user input
             pygame.draw.rect(self.window, (255, 255, 255), (250, 300, 300, 50), 5)
-            #pygame.display.update()
+            
+            self.draw_text((230, 230, 0), "Time: " + str(start), (400, 100))
+
+            start -= dt
+            if start <= 0:
+                start = 60
+            pygame.display.flip()
+            dt = clock.tick(30) / 1000
+            self.window.blit(self.background, (0, 0))
+
+            random_word = self.random_words()
+            self.draw_text((230, 230, 0), random_word, (400, 300))
+            self.input_words.append(random_word)
 
             events = pygame.event.get()
             for event in events:
-                random_word = self.random_words()
-                self.draw_text((230, 230, 0), random_word, (400, 300))
-                self.input_words.append(random_word)
-
+                if event.type == pygame.MOUSEMOTION:
+                    pass
                 clock = pygame.time.Clock()
                 self.draw_text((230, 230, 0), "Caterinca", (400, 200))
                 if event.type == pygame.QUIT:
                     running = False
                     pygame.quit()
                     quit()
-
-
+    
     def update(self):
         pass
         # for gameObject in self.gameObjects:
