@@ -17,7 +17,6 @@ class button():
         self.text = text
 
     def draw(self, window, outline = None):
-        #Call this method to draw the button on the screen
         if outline:
             pygame.draw.rect(window, outline, (self.x - 2, self.y - 2, self.width + 4, self.height + 4), 0)
             
@@ -40,7 +39,7 @@ class Game:
 
         self.running = True
         self.input_words = []
-        self.word = ''
+        self.user_words = []
 
         self.background = pygame.image.load('background.jpeg')
         self.background = pygame.transform.scale(self.background, (WIDTH, HEIGHT))
@@ -87,37 +86,68 @@ class Game:
         self.window.blit(self.background, (0, 0))
         pygame.display.update()
 
-        clock = pygame.time.Clock()
         start = 60
         dt = 0
 
         running = True
+        enabled = True
+        start_game = False
+        actual_word = ''
+
         while running:
-            pygame.draw.rect(self.window, (255, 255, 255), (250, 300, 300, 50), 5)
-            
-            self.draw_text((230, 230, 0), "Time: " + str(start), (400, 100))
-
-            start -= dt
-            if start <= 0:
-                start = 60
-            pygame.display.flip()
-            dt = clock.tick(30) / 1000
+            pygame.display.update()
             self.window.blit(self.background, (0, 0))
+            if enabled:
+                random_word = self.random_words()
+                self.input_words.append(random_word)
+                enabled = False
+            self.draw_text((230, 230, 0), random_word, (400, 215))
+            
+            pygame.draw.rect(self.window, (255, 255, 255), (250, 300, 300, 50), 5)
+            self.draw_text((230, 230, 0), actual_word, (400, 325))
+            
+            if start_game:
+                clock = pygame.time.Clock()
+                self.draw_text((230, 230, 0), "Time: " + str(int(start)), (400, 50))
+                start -= dt
+                if start <= 0:
+                    print("Caterinca!!!")
+                    
+                    running = False
+                dt = clock.tick(1) / 1000
 
-            random_word = self.random_words()
-            self.draw_text((230, 230, 0), random_word, (400, 300))
-            self.input_words.append(random_word)
+            pos = pygame.mouse.get_pos()
 
+            #self.window.blit(self.background, (0, 0))
+            #pygame.display.update()
             events = pygame.event.get()
             for event in events:
-                if event.type == pygame.MOUSEMOTION:
-                    pass
-                clock = pygame.time.Clock()
-                # self.draw_text((230, 230, 0), "Caterinca", (400, 200))
                 if event.type == pygame.QUIT:
                     running = False
                     pygame.quit()
                     quit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if pos[0] > 250 and pos[0] < 250 + 300 and pos[1] > 300 and pos[1] < 300 + 50:
+                        start_game = True
+
+                if event.type == pygame.KEYDOWN:
+                    # if self.active and not self.end:
+                        if event.key == pygame.K_RETURN:
+                            enabled = True
+                            self.user_words.append(actual_word)
+                            actual_word = ''
+                            # print(self.input_words)
+                            # print(self.user_words)
+                            
+                        elif event.key == pygame.K_BACKSPACE:
+                            actual_word = actual_word[:-1]
+                        else:
+                            try:
+                                actual_word += event.unicode
+                            except:
+                                pass
+
+        pygame.display.update()
     
     def update(self):
         pass
@@ -126,26 +156,11 @@ class Game:
 
 
     def draw_text(self, color, message, position):
-        
-        # def draw_text(self, screen, msg, y ,fsize, color):
-        #msg = "Typing Speed Test"
-        #self.draw_text(self.screen, msg,80, 80,self.HEAD_C)
-
-        # draw icon image
-        # self.time_img = pygame.image.load('icon.png')
-        # self.time_img = pygame.transform.scale(self.time_img, (150,150))
-
-        #screen.blit(self.time_img, (80,320))
-        # self.window.blit(None, (80, 130))
-        # self.draw_text(screen,"Reset", self.h - 70, 26, (100,100,100))
-
         font = pygame.font.SysFont('comicsans', 60)
         text = font.render(message, 1, color)
         text_rect = text.get_rect(center = position)
         self.window.blit(text, text_rect)
 
-        # self.window.blit(self.time_img, (-75,self.h-140))
-        # self.draw_text(screen,"Reset", self.h - 70, 26, (100,100,100))
         pygame.display.update()
     
     def reset_game(self):
