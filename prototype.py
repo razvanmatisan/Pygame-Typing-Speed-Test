@@ -210,6 +210,11 @@ class Game:
                 completely_correct += 1
         
         self.accuracy = count/total_len * 100
+        if self.accuracy < 0:
+            self.accuracy = 0
+
+        if completely_correct > self.high_score:
+            self.high_score  = completely_correct  
 
         print(total_len)
         print(count)
@@ -221,8 +226,10 @@ class Game:
         
         #  self.speed = len(self.user_words)
       
-        self.draw_text(RED, "Speed: " + str(int(self.speed)) + " wpm", (100, 20), 30)
-        self.draw_text(RED, str(int(self.accuracy)), (400, 150), 50)
+        self.draw_text(RED, "Speed: " + str(int(self.speed)) + " wpm", (85, 50), 30)
+        self.draw_text(RED, "Accuracy: " + str(int(self.accuracy)) + "%", (400, 150), 50)
+
+
 
         print(self.input_words)
         print(self.user_words)
