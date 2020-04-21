@@ -101,14 +101,14 @@ class Game:
         actual_word = ''
 
         while running:
-            pygame.display.update()
+            # pygame.display.update()
             self.window.blit(self.background, (0, 0))
             self.draw_text(YELLOW, "Time: " + str(int(start)), (400, 50), 60)
             self.draw_text(YELLOW, "Highscore: " + str(int(self.high_score)), (65, 20), 30)
             self.draw_text(YELLOW, "  complete words!!", (215 , 20), 30)
 
 
-            pygame.display.update()
+            # pygame.display.update()
 
             #Se genereaza cate un cuvant la o apasare pe tasta ENTER
             if enabled:
@@ -144,7 +144,7 @@ class Game:
                             if event.type == pygame.MOUSEBUTTONDOWN:
                                 if try_again_button.isOver(pos):
                                     running = False
-                    pygame.display.update()
+                    # pygame.display.update()
                 dt = clock.tick(30) / 100
 
             if start == 0:
@@ -240,7 +240,7 @@ class Game:
 
         print(self.input_words)
         print(self.user_words)
-        pygame.display.update()
+        # pygame.display.update()
         #pass
 
     # Se afiseaza pe ecran un anumit mesaj
@@ -250,7 +250,7 @@ class Game:
         text_rect = text.get_rect(center = position)
         self.window.blit(text, text_rect)
 
-        pygame.display.update()
+        # pygame.display.update()
     
     def reset_game(self):
         self.input_words = []
