@@ -141,7 +141,7 @@ class Game:
                             if event.type == pygame.MOUSEBUTTONDOWN:
                                 if try_again_button.isOver(pos):
                                     running = False
-                dt = clock.tick(40) / 700 #700
+                dt = clock.tick(40) / 700
 
             if start == 0:
                 end_game = True
