@@ -104,7 +104,7 @@ class Game:
             # pygame.display.update()
             self.window.blit(self.background, (0, 0))
             self.draw_text(YELLOW, "Time: " + str(int(start)), (400, 50), 60)
-            self.draw_text(YELLOW, "Highscore: " + str(int(self.high_score)), (65, 20), 30)
+            self.draw_text(YELLOW, "Highscore: " + str(int(self.high_score)) + " correct words", (140, 20), 30)
 
             # pygame.display.update()
 
@@ -122,7 +122,7 @@ class Game:
             #Countdown-ul incepe numai cand se apasa pe dreptunghi
             if start_game:
                 clock = pygame.time.Clock()
-                self.draw_text((230, 230, 0), "Time: " + str(int(start)), (400, 50), 60)
+                self.draw_text(YELLOW, "Time: " + str(int(start)), (400, 50), 60)
                 start -= dt
                 #Aici trebuie sa incluzi rezultatele
                 if start <= 0:
@@ -141,8 +141,7 @@ class Game:
                             if event.type == pygame.MOUSEBUTTONDOWN:
                                 if try_again_button.isOver(pos):
                                     running = False
-                    # pygame.display.update()
-                dt = clock.tick(30) / 100
+                dt = clock.tick(40) / 700 #700
 
             if start == 0:
                 end_game = True
@@ -176,7 +175,6 @@ class Game:
                                 actual_word = actual_word[:-1]
                             else:
                                 actual_word += event.unicode
-
             pygame.display.update()
     
     # Metoda care afiseaza in joc rezultatele
@@ -187,39 +185,43 @@ class Game:
         count = 0 # nr de litere corecte de la user
         completely_correct = 0 #nr de cuvinte complet corecte
         total_len = 0 # nr total de litere din input
-        for i, c in enumerate(self.user_words):
-            j = 0
-            extra = 0 #lotere care depasesc lungimea cuvantului
-            for k, letter in list(enumerate(c)):
-                if j < int(len(self.input_words[i])):
-                    if self.input_words[i][j] == letter:
+
+        index = 0
+        for word in self.user_words:
+            len_word = len(word)
+            len_input_word = len(self.input_words[index])
+            if len_word <= len_input_word:
+                if word == self.input_words[index]:
+                    completely_correct += 1
+                for char in range(len_word):
+                    if self.input_words[index][char] == word[char]:
                         count += 1
-                    j += 1
-                else:
-                    extra = len(c) - len(self.input_words[i])
-                    count -= extra
-                
-            if c:
-                total_len += len(self.input_words[i])
-            if self.input_words[i] == c:
-                completely_correct += 1
+            else:
+                extra = len_word - len_input_word
+                count -= extra
+            print(self.user_words)
+            print(word)
+            total_len += len_input_word
+            index += 1
         
-        self.accuracy = count/total_len * 100
+        if total_len == 0:
+            accuracy = 0
+        else:
+            accuracy = count / total_len * 100
+        self.accuracy = accuracy
 
-        print(total_len)
-        print(count)
+        if completely_correct > self.high_score:
+            self.high_score = completely_correct
 
+        speed = 0
         for word in self.user_words:
             if word:
-                print(word)
-                self.speed += 1
+                speed += 1
+        self.speed = speed
         
         self.draw_text(RED, "Speed: " + str(int(self.speed)) + " WPM", (400, 100), 50)
         self.draw_text(RED, "Accuracy: " + str(int(self.accuracy)) + "%", (400, 150), 50)
-        #  self.speed = len(self.user_words)
-      
-        self.draw_text(RED, "Speed: " + str(int(self.speed)) + " wpm", (100, 20), 30)
-        self.draw_text(RED, str(int(self.accuracy)), (400, 150), 50)
+
 
     # Se afiseaza pe ecran un anumit mesaj
     def draw_text(self, color, message, position, dim):
