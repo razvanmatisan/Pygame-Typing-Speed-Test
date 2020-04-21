@@ -164,7 +164,6 @@ class Game:
                         if pos[0] > 250 and pos[0] < 250 + 300 and pos[1] > 300 and pos[1] < 300 + 50:
                             active = True
                             start_game = True
-                            
 
                     if event.type == pygame.KEYDOWN:
                         if active:
@@ -176,10 +175,7 @@ class Game:
                             elif event.key == pygame.K_BACKSPACE:
                                 actual_word = actual_word[:-1]
                             else:
-                                try:
-                                    actual_word += event.unicode
-                                except:
-                                    pass
+                                actual_word += event.unicode
 
             pygame.display.update()
     
@@ -189,13 +185,27 @@ class Game:
     # (o poti folosi ca numar de cuvinte scrise perfect --> va ramane salvata cat timp se da reset la joc)
     def print_results(self):
         count = 0
-        for i,c in enumerate(self.user_words):
-            try:
-                if self.input_words[i] == c:
-                    count += 1
-            except:
-                pass
-        self.accuracy = count/len(self.user_words)*100
+        correct_words = 0
+        index = 1
+        for word in self.user_words:
+            len_word = strlen(word)
+            len_input_word = strlen(self.user_words[index])
+            if len_word == len_input_word:
+                if word == self.input_words[index]:
+                    correct_words += 1
+                    count += strlen(word)
+                else:
+                    for c in 1:strlen(word):
+                        if word[c] == self.input_words[index][c]:
+                            count += 1
+            # else:
+            #     err_rel = 
+            # index += 1
+            
+        self.accuracy = count / len(self.user_words) * 100
+
+        if correct_words > self.high_score:
+            self.high_score = correct_words
 
         # for word in self.user_words:
         #     if word:
@@ -205,11 +215,11 @@ class Game:
         self.speed = len(self.user_words)
         #print(self.accuracy)
         
-        self.draw_text(RED, str(int(self.speed)), (400, 100), 50)
-        self.draw_text(RED, str(int(self.accuracy)), (400, 150), 50)
+        self.draw_text(RED, "Speed: " + str(int(self.speed)) + " WPM", (400, 100), 50)
+        self.draw_text(RED, "Accuracy: " + str(int(self.accuracy)) + "%", (400, 150), 50)
 
-        print(self.input_words)
-        print(self.user_words)
+        # print(self.input_words)
+        # print(self.user_words)
         pygame.display.update()
 
         #pass
