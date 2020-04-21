@@ -105,6 +105,8 @@ class Game:
             self.window.blit(self.background, (0, 0))
             self.draw_text(YELLOW, "Time: " + str(int(start)), (400, 50), 60)
             self.draw_text(YELLOW, "Highscore: " + str(int(self.high_score)), (65, 20), 30)
+            self.draw_text(YELLOW, "  complete words!!", (215 , 20), 30)
+
 
             pygame.display.update()
 
@@ -123,6 +125,7 @@ class Game:
             if start_game:
                 clock = pygame.time.Clock()
                 self.draw_text((230, 230, 0), "Time: " + str(int(start)), (400, 50), 60)
+
                 start -= dt
                 #Aici trebuie sa incluzi rezultatele
                 if start <= 0:
@@ -219,15 +222,19 @@ class Game:
         print(total_len)
         print(count)
 
+        speed  = 0
         for word in self.user_words:
             if word:
                 print(word)
-                self.speed += 1
+                speed += 1
+
+        self.speed = speed
         
         #  self.speed = len(self.user_words)
       
-        self.draw_text(RED, "Speed: " + str(int(self.speed)) + " wpm", (85, 50), 30)
-        self.draw_text(RED, "Accuracy: " + str(int(self.accuracy)) + "%", (400, 150), 50)
+        self.draw_text(RED, "Speed: " + str(int(self.speed)) + " wpm", (405, 100), 50)
+        # pygame.display.update()
+        self.draw_text(RED, "Accuracy: " + str(int(self.accuracy)) + "%", (405, 130), 50)
 
 
 
