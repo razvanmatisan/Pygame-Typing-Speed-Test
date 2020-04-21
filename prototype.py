@@ -188,30 +188,45 @@ class Game:
     # Am adaugat si o variabila in __init__ numita high_score
     # (o poti folosi ca numar de cuvinte scrise perfect --> va ramane salvata cat timp se da reset la joc)
     def print_results(self):
-        count = 0
-        for i,c in enumerate(self.user_words):
-            try:
-                if self.input_words[i] == c:
-                    count += 1
-            except:
-                pass
-        self.accuracy = count/len(self.user_words)*100
+        count = 0 # nr de litere corecte de la user
+        completely_correct = 0 #nr de cuvinte complet corecte
+        total_len = 0 # nr total de litere din input
+        for i, c in enumerate(self.user_words):
+            j = 0
+            extra = 0 #lotere care depasesc lungimea cuvantului
+            for k, letter in list(enumerate(c)):
+                if j < int(len(self.input_words[i])):
+                    if self.input_words[i][j] == letter:
+                        count += 1
+                    j += 1
+                else:
+                    extra = len(c) - len(self.input_words[i])
+                    count -= extra
+                
+            if c:
+                total_len += len(self.input_words[i])
+                
+            if self.input_words[i] == c:
+                completely_correct += 1
+        
+        self.accuracy = count/total_len * 100
 
-        # for word in self.user_words:
-        #     if word:
-        #         print(word)
-        #         self.speed += 1
+        print(total_len)
+        print(count)
+
+        for word in self.user_words:
+            if word:
+                print(word)
+                self.speed += 1
         
-        self.speed = len(self.user_words)
-        #print(self.accuracy)
-        
+        #  self.speed = len(self.user_words)
+      
         self.draw_text(RED, str(int(self.speed)), (400, 100), 50)
         self.draw_text(RED, str(int(self.accuracy)), (400, 150), 50)
 
         print(self.input_words)
         print(self.user_words)
         pygame.display.update()
-
         #pass
 
     # Se afiseaza pe ecran un anumit mesaj
