@@ -221,7 +221,7 @@ class Game:
         
         #  self.speed = len(self.user_words)
       
-        self.draw_text(RED, str(int(self.speed)), (400, 100), 50)
+        self.draw_text(RED, "Speed: " + str(int(self.speed)) + " wpm", (100, 20), 30)
         self.draw_text(RED, str(int(self.accuracy)), (400, 150), 50)
 
         print(self.input_words)
