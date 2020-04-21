@@ -127,29 +127,27 @@ class Game:
                 #Aici trebuie sa incluzi rezultatele
                 if start <= 0:
                     start = 0
-                    #self.window.blit(self.background, (0, 0))
-                    self.print_results() # Se afiseaza acuratetea, viteza (High_score-ul se va afisa mereu, tu doar tb sa l actualizezi aici)
-                    try_again_button = button(RED, 400, 475, 300, 100, "Try Again")
-                    try_again_button.draw(self.window, BLACK)
+                    if end_game:
+                        self.print_results() # Se afiseaza acuratetea, viteza (High_score-ul se va afisa mereu, tu doar tb sa l actualizezi aici)
+                        try_again_button = button(RED, 400, 475, 300, 100, "Try Again")
+                        try_again_button.draw(self.window, BLACK)
 
-                    
+                        pos = pygame.mouse.get_pos()
+                        for event in pygame.event.get():
+                            if event.type == QUIT:
+                                self.running = False
+                                pygame.quit()
+                                quit()
+                            if event.type == pygame.MOUSEBUTTONDOWN:
+                                if try_again_button.isOver(pos):
+                                    running = False
                     pygame.display.update()
-
-                    pos = pygame.mouse.get_pos()
-                    for event in pygame.event.get():
-                        if event.type == QUIT:
-                            self.running = False
-                            pygame.quit()
-                            quit()
-                        if event.type == pygame.MOUSEBUTTONDOWN:
-                            if try_again_button.isOver(pos):
-                                running = False
-                dt = clock.tick(30) / 1000
+                dt = clock.tick(30) / 100
 
             if start == 0:
                 end_game = True
-                self.user_words.append(actual_word)
-                actual_word = ''
+                #self.user_words.append(actual_word)
+                #actual_word = ''
 
             if not end_game:
                 pos = pygame.mouse.get_pos()
