@@ -184,35 +184,6 @@ class Game:
     # Am adaugat si o variabila in __init__ numita high_score
     # (o poti folosi ca numar de cuvinte scrise perfect --> va ramane salvata cat timp se da reset la joc)
     def print_results(self):
-<<<<<<< HEAD
-        count = 0
-        correct_words = 0
-        index = 1
-        for word in self.user_words:
-            len_word = strlen(word)
-            len_input_word = strlen(self.user_words[index])
-            if len_word == len_input_word:
-                if word == self.input_words[index]:
-                    correct_words += 1
-                    count += strlen(word)
-                else:
-                    for c in 1:strlen(word):
-                        if word[c] == self.input_words[index][c]:
-                            count += 1
-            # else:
-            #     err_rel = 
-            # index += 1
-            
-        self.accuracy = count / len(self.user_words) * 100
-
-        if correct_words > self.high_score:
-            self.high_score = correct_words
-
-        # for word in self.user_words:
-        #     if word:
-        #         print(word)
-        #         self.speed += 1
-=======
         count = 0 # nr de litere corecte de la user
         completely_correct = 0 #nr de cuvinte complet corecte
         total_len = 0 # nr total de litere din input
@@ -232,7 +203,6 @@ class Game:
                 total_len += len(self.input_words[i])
             if self.input_words[i] == c:
                 completely_correct += 1
->>>>>>> 41a2c5c857d04fbfcee5e659220eea8a25c98ce6
         
         self.accuracy = count/total_len * 100
 
