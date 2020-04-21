@@ -97,6 +97,7 @@ class Game:
         enabled = True
         active = False
         start_game = False
+        end_game = False
         actual_word = ''
 
         while running:
@@ -145,38 +146,44 @@ class Game:
                                 running = False
                 dt = clock.tick(30) / 100
 
-            pos = pygame.mouse.get_pos()
-            events = pygame.event.get()
+            if start == 0:
+                end_game = True
+                self.user_words.append(actual_word)
+                actual_word = ''
 
-            for event in events:
-                #Butonul de inchidere
-                if event.type == pygame.QUIT:
-                    running = False
-                    pygame.quit()
-                    quit()
-                #Apasare de mouse (daca se apasa pe chenar, se afiseaza countdown-ul)
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if pos[0] > 250 and pos[0] < 250 + 300 and pos[1] > 300 and pos[1] < 300 + 50:
-                        active = True
-                        start_game = True
-                        
-                #Celelalte taste: In momentul in care se apasa pe alte taste, 
-                if event.type == pygame.KEYDOWN:
-                    if active:
-                        if event.key == pygame.K_RETURN:
-                            enabled = True
-                            self.user_words.append(actual_word)
-                            actual_word = ''
-                                
-                        elif event.key == pygame.K_BACKSPACE:
-                            actual_word = actual_word[:-1]
-                        else:
-                            try:
-                                actual_word += event.unicode
-                            except:
-                                pass
+            if not end_game:
+                pos = pygame.mouse.get_pos()
+                events = pygame.event.get()
 
-        pygame.display.update()
+                for event in events:
+                    #Butonul de inchidere
+                    if event.type == pygame.QUIT:
+                        running = False
+                        pygame.quit()
+                        quit()
+                    #Apasare de mouse (daca se apasa pe chenar, se afiseaza countdown-ul)
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if pos[0] > 250 and pos[0] < 250 + 300 and pos[1] > 300 and pos[1] < 300 + 50:
+                            active = True
+                            start_game = True
+                            
+
+                    if event.type == pygame.KEYDOWN:
+                        if active:
+                            if event.key == pygame.K_RETURN:
+                                enabled = True
+                                self.user_words.append(actual_word)
+                                actual_word = ''
+                                    
+                            elif event.key == pygame.K_BACKSPACE:
+                                actual_word = actual_word[:-1]
+                            else:
+                                try:
+                                    actual_word += event.unicode
+                                except:
+                                    pass
+
+            pygame.display.update()
     
     # Metoda care afiseaza in joc rezultatele
     # Aici se vor calcula viteza si acuratetea
