@@ -144,7 +144,7 @@ class Game:
                         if event.type == pygame.MOUSEBUTTONDOWN:
                             if try_again_button.isOver(pos):
                                 running = False
-                dt = clock.tick(30) / 100
+                dt = clock.tick(30) / 1000
 
             if start == 0:
                 end_game = True
@@ -190,7 +190,31 @@ class Game:
     # Am adaugat si o variabila in __init__ numita high_score
     # (o poti folosi ca numar de cuvinte scrise perfect --> va ramane salvata cat timp se da reset la joc)
     def print_results(self):
-        pass
+        count = 0
+        for i,c in enumerate(self.user_words):
+            try:
+                if self.input_words[i] == c:
+                    count += 1
+            except:
+                pass
+        self.accuracy = count/len(self.user_words)*100
+
+        # for word in self.user_words:
+        #     if word:
+        #         print(word)
+        #         self.speed += 1
+        
+        self.speed = len(self.user_words)
+        #print(self.accuracy)
+        
+        self.draw_text(RED, str(int(self.speed)), (400, 100), 50)
+        self.draw_text(RED, str(int(self.accuracy)), (400, 150), 50)
+
+        print(self.input_words)
+        print(self.user_words)
+        pygame.display.update()
+
+        #pass
 
     # Se afiseaza pe ecran un anumit mesaj
     def draw_text(self, color, message, position, dim):
