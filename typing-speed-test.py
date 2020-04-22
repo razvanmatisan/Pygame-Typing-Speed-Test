@@ -24,7 +24,7 @@ class button():
         
         if self.text != '':
             font = pygame.font.SysFont('comicsans', 60)
-            text = font.render(self.text, 1, (0, 0, 0))
+            text = font.render(self.text, 1, BLACK)
             window.blit(text, (self.x + (self.width / 2 - text.get_width() / 2), self.y + (self.height / 2 - text.get_height() / 2)))
 
     # checks if mouse cursor is inside the rectangle
@@ -52,23 +52,20 @@ class Game:
         self.window = pygame.display.set_mode([WIDTH, HEIGHT])
         
         pygame.display.set_caption('Typing Speed Test')
-        
-        pygame.time.Clock().tick(60)
 
     # returns a random word from 'words.txt'
     def random_words(self):
         fin = open('words.txt').read()
         words = fin.split('\n')
-        random_word = random.choice(words)
-        return random_word
+        return random.choice(words)
 
     def run(self):
         while self.running:
             self.reset_game()
-            self.first_page()
+            self.title_screen()
 
     # creates title screen
-    def first_page(self):
+    def title_screen(self):
         self.window.blit(self.background, (0, 0))
 
         # creates the start button
@@ -96,12 +93,12 @@ class Game:
         start = 60
         dt = 0
 
-        running = True
+        running = True 
         enabled = True
         active = False
         start_game = False
         end_game = False
-        actual_word = ''
+        actual_word = '' # the current word written by user
 
         while running:
             self.window.blit(self.background, (0, 0))
@@ -115,20 +112,23 @@ class Game:
                 enabled = False
             self.draw_text(YELLOW, random_word, (400, 215), 60)
 
-            # draws rectangle and the user word inside of it
+            # draws the typing border and the written word inside of it
             pygame.draw.rect(self.window, WHITE, (250, 300, 300, 50), 5)
             self.draw_text(YELLOW, actual_word, (400, 325), 60)
 
-            ## starts game when the user clicks inside the rectangle
+            # the clock starts to countdown when the user clicks inside the typing border 
             if start_game:
                 clock = pygame.time.Clock()
                 self.draw_text(YELLOW, "Time: " + str(int(start)), (400, 50), 60)
                 start -= dt
-                #Aici trebuie sa incluzi rezultatele
+                # game stops when the time is up
                 if start <= 0:
                     start = 0
                     if end_game:
-                        self.print_results() # Se afiseaza acuratetea, viteza (High_score-ul se va afisa mereu, tu doar tb sa l actualizezi aici)
+                        # printing the results
+                        self.print_results()
+                        
+                        # create the "Try Again" button
                         try_again_button = button(RED, 400, 475, 300, 100, "Try Again")
                         try_again_button.draw(self.window, BLACK)
 
@@ -138,6 +138,7 @@ class Game:
                                 self.running = False
                                 pygame.quit()
                                 quit()
+                            # reset the game if the "Try Again" button is pressed
                             if event.type == pygame.MOUSEBUTTONDOWN:
                                 if try_again_button.isOver(pos):
                                     running = False
@@ -145,27 +146,27 @@ class Game:
 
             if start == 0:
                 end_game = True
-                #self.user_words.append(actual_word)
-                #actual_word = ''
 
+            # user can write words until the time is up
             if not end_game:
                 pos = pygame.mouse.get_pos()
                 events = pygame.event.get()
 
                 for event in events:
-                    #Butonul de inchidere
                     if event.type == pygame.QUIT:
                         running = False
                         pygame.quit()
                         quit()
-                    #Apasare de mouse (daca se apasa pe chenar, se afiseaza countdown-ul)
+
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if pos[0] > 250 and pos[0] < 250 + 300 and pos[1] > 300 and pos[1] < 300 + 50:
-                            active = True
-                            start_game = True
+                            active = True # allows the user to write words 
+                            start_game = True # starts the game when the user clicks inside the typing border
 
                     if event.type == pygame.KEYDOWN:
                         if active:
+                            # the written word is saved and another word is generated
+                            # when the ENTER key is pressed
                             if event.key == pygame.K_RETURN:
                                 enabled = True
                                 self.user_words.append(actual_word)
@@ -177,19 +178,17 @@ class Game:
                                 actual_word += event.unicode
             pygame.display.update()
     
-    # Metoda care afiseaza in joc rezultatele
-    # Aici se vor calcula viteza si acuratetea
-    # Am adaugat si o variabila in __init__ numita high_score
-    # (o poti folosi ca numar de cuvinte scrise perfect --> va ramane salvata cat timp se da reset la joc)
+    
     def print_results(self):
-        count = 0 # nr de litere corecte de la user
-        completely_correct = 0 #nr de cuvinte complet corecte
-        total_len = 0 # nr total de litere din input
+        count = 0 # counts correct characters written by user
+        completely_correct = 0 # counts completely correct written words
+        total_len = 0 # counts the total characters of the generated words
 
         index = 0
         for word in self.user_words:
             len_word = len(word)
             len_input_word = len(self.input_words[index])
+
             if len_word <= len_input_word:
                 if word == self.input_words[index]:
                     completely_correct += 1
@@ -199,38 +198,38 @@ class Game:
             else:
                 extra = len_word - len_input_word
                 count -= extra
-            print(self.user_words)
-            print(word)
+
             total_len += len_input_word
             index += 1
         
+        # calculate the accuracy
         if total_len == 0:
             accuracy = 0
         else:
             accuracy = count / total_len * 100
         self.accuracy = accuracy
 
+        # update the highscore
         if completely_correct > self.high_score:
             self.high_score = completely_correct
 
+        # calculate the speed
         speed = 0
         for word in self.user_words:
             if word:
                 speed += 1
         self.speed = speed
         
+        # draw the results
         self.draw_text(RED, "Speed: " + str(int(self.speed)) + " WPM", (400, 100), 50)
         self.draw_text(RED, "Accuracy: " + str(int(self.accuracy)) + "%", (400, 150), 50)
 
-
-    # Se afiseaza pe ecran un anumit mesaj
     def draw_text(self, color, message, position, dim):
         font = pygame.font.SysFont('comicsans', dim)
         text = font.render(message, 1, color)
         text_rect = text.get_rect(center = position)
         self.window.blit(text, text_rect)
 
-    
     def reset_game(self):
         self.input_words = []
         self.user_words = []
