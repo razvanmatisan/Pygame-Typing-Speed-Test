@@ -20,9 +20,6 @@ class button():
         self.text = text
 
     def draw(self, window, outline = None):
-        if outline:
-            pygame.draw.rect(window, outline, (self.x - 2, self.y - 2, self.width + 4, self.height + 4), 0)
-            
         pygame.draw.rect(window, self.color, (self.x, self.y, self.width, self.height), 0)
         
         if self.text != '':
@@ -30,6 +27,8 @@ class button():
             text = font.render(self.text, 1, (0, 0, 0))
             window.blit(text, (self.x + (self.width / 2 - text.get_width() / 2), self.y + (self.height / 2 - text.get_height() / 2)))
 
+    # checks if mouse cursor is inside the rectangle
+    # pos -> mouse cursor coordinates
     def isOver(self, pos):
         if pos[0] > self.x and pos[0] < self.x + self.width and pos[1] > self.y and pos[1] < self.y + self.height:
             return True
@@ -56,6 +55,7 @@ class Game:
         
         pygame.time.Clock().tick(60)
 
+    # returns a random word from 'words.txt'
     def random_words(self):
         fin = open('words.txt').read()
         words = fin.split('\n')
@@ -67,20 +67,24 @@ class Game:
             self.reset_game()
             self.first_page()
 
+    # creates title screen
     def first_page(self):
         self.window.blit(self.background, (0, 0))
+
+        # creates the start button
         start_button = button(RED, 310, 265, 200, 100, "Start")
-
         start_button.draw(self.window, BLACK)
-        pos = pygame.mouse.get_pos()
 
+        pos = pygame.mouse.get_pos()
         events = pygame.event.get()
+
         for event in events:
             if event.type == pygame.QUIT:
                 self.running = False
                 pygame.quit()
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                # starts game when you click on the start button
                 if start_button.isOver(pos):
                     pygame.display.update()
                     self.main_page()
@@ -88,8 +92,7 @@ class Game:
     
     def main_page(self):
         self.window.blit(self.background, (0, 0))
-        pygame.display.update()
-
+        
         start = 60
         dt = 0
 
@@ -101,25 +104,22 @@ class Game:
         actual_word = ''
 
         while running:
-            # pygame.display.update()
             self.window.blit(self.background, (0, 0))
             self.draw_text(YELLOW, "Time: " + str(int(start)), (400, 50), 60)
             self.draw_text(YELLOW, "Highscore: " + str(int(self.high_score)) + " correct words", (140, 20), 30)
 
-            # pygame.display.update()
-
-            #Se genereaza cate un cuvant la o apasare pe tasta ENTER
+            # generates a random word when ENTER key is pressed
             if enabled:
                 random_word = self.random_words()
                 self.input_words.append(random_word)
                 enabled = False
             self.draw_text(YELLOW, random_word, (400, 215), 60)
 
-            #Desenare cuvant din fisier + chenarul in care trebuie scrise cuvintele
+            # draws rectangle and the user word inside of it
             pygame.draw.rect(self.window, WHITE, (250, 300, 300, 50), 5)
             self.draw_text(YELLOW, actual_word, (400, 325), 60)
 
-            #Countdown-ul incepe numai cand se apasa pe dreptunghi
+            ## starts game when the user clicks inside the rectangle
             if start_game:
                 clock = pygame.time.Clock()
                 self.draw_text(YELLOW, "Time: " + str(int(start)), (400, 50), 60)
