@@ -20,9 +20,6 @@ class button():
         self.text = text
 
     def draw(self, window, outline = None):
-        if outline:
-            pygame.draw.rect(window, outline, (self.x - 2, self.y - 2, self.width + 4, self.height + 4), 0)
-            
         pygame.draw.rect(window, self.color, (self.x, self.y, self.width, self.height), 0)
         
         if self.text != '':
@@ -30,6 +27,8 @@ class button():
             text = font.render(self.text, 1, (0, 0, 0))
             window.blit(text, (self.x + (self.width / 2 - text.get_width() / 2), self.y + (self.height / 2 - text.get_height() / 2)))
 
+    # checks if mouse cursor is inside the rectangle
+    # pos -> mouse cursor coordinates
     def isOver(self, pos):
         if pos[0] > self.x and pos[0] < self.x + self.width and pos[1] > self.y and pos[1] < self.y + self.height:
             return True
@@ -56,6 +55,7 @@ class Game:
         
         pygame.time.Clock().tick(60)
 
+    # returns a random word from 'words.txt'
     def random_words(self):
         fin = open('words.txt').read()
         words = fin.split('\n')
@@ -67,20 +67,25 @@ class Game:
             self.reset_game()
             self.first_page()
 
+    # creates title screen
     def first_page(self):
         self.window.blit(self.background, (0, 0))
+
+        # creates the start button
         start_button = button(RED, 310, 265, 200, 100, "Start")
-
         start_button.draw(self.window, BLACK)
+        
         pos = pygame.mouse.get_pos()
-
         events = pygame.event.get()
+
         for event in events:
             if event.type == pygame.QUIT:
                 self.running = False
                 pygame.quit()
                 quit()
+            
             if event.type == pygame.MOUSEBUTTONDOWN:
+                # starts game when you click on the start button
                 if start_button.isOver(pos):
                     pygame.display.update()
                     self.main_page()
@@ -145,7 +150,7 @@ class Game:
                                 if try_again_button.isOver(pos):
                                     running = False
                     # pygame.display.update()
-                dt = clock.tick(30) / 100
+                dt = clock.tick(30) / 1000
 
             if start == 0:
                 end_game = True
