@@ -3,25 +3,30 @@
 <img src="background.jpeg" width="480">
 </p>
 
-## Installation
+## Installation (on Ubuntu/Linux)
 
-If you want to test your typing skills, all you need is Python3 and Pygame
- 1. Install Pygame:
-    - Ubuntu: __`sudo apt-get install python-pygame`__
-    - 
-    - 
+Before you run the game, you need to be sure you have installed Python3 and Pygame. In case you haven't, here are some simple instructions to follow: 
 
-## Interpretation and running
+ 1. Install Python3:  __`sudo apt-get install python3`__
+ 2. Install Pygame: __`sudo apt-get install python-pygame`__
 
-Depending on the OS, follow the next instructions:
 
- 1. Ubuntu: __`python3 typing-speed-test`__
- 2. Windows (10):
- 3. Mac....
- 4.
- 5.
+## Running the program (on Ubuntu/Linux)
+
+There are few steps left before your journey begins. Make sure to follow the next steps: 
+
+ 1. __`git clone `__
+cd ...
+python3 ...
+Use the command in terminal: __`python3 typing-speed-test.py`__
+
 
 ## How to test your typing skills - instructions
+
+
+
+START
+Use the command in terminal: __`python3 typing-speed-test.py`__
 1. Press Start
 
 * insert photo * 
