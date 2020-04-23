@@ -196,6 +196,9 @@ class Game:
                     if self.input_words[index][char] == word[char]:
                         count += 1
             else:
+                for char in range(len_input_word):
+                    if self.input_words[index][char] == word[char]:
+                        count += 1
                 extra = len_word - len_input_word
                 count -= extra
 
