@@ -30,6 +30,8 @@ Now you are ready to begin!
 
 
 
+
+
 2. Press inside the border to start the game
 
 * insert photo *
