@@ -3,6 +3,8 @@
 <img src="background.jpeg" width="480">
 </p>
 
+## 
+
 ## Installation (on Ubuntu/Linux)
 
 Before you run the game, you need to be sure you have installed Python3 and Pygame. In case you haven't, here are some simple instructions to follow: 
@@ -22,33 +24,49 @@ There are few steps left before your journey begins. Make sure to follow the nex
 
 ## How to test your typing skills - instructions
 
-Now you are ready to begin! 
+__Now you are ready to begin!__ 
 
 
-1. On the screen title, press START
+### 1. On the screen title, press Start
 
 
+<p align="left">
+<img src="Screenshots/START.png" width="480">
+</p>
 
 
+### 2. Press inside the white rectangle to start the game
+
+<p align="left">
+<img src="Screenshots/before_game.png" width="480">
+</p>
 
 
-2. Press inside the border to start the game
+### 3. Write as many correct words as possible.
+   HINT: Press ENTER after you finished to write the given word.
 
-* insert photo *
-3. Write as many completely correct words as you can (press ENTER if you finished to write the given word) bla bla
-
-
-4. Check your results and try again if you want to __improve your score!!!!!!!!!!!!!!!!!__
--> The number of completely correct words are saved until you close the game ?
+<p align="left">
+<img src="Screenshots/GAME_PLAY.png" width="480">
+</p>
 
 
-## Struture of the project
+### 4. Check your results and try again if you want to improve your score.
+
+<p align="left">
+<img src="Screenshots/Final_game.png" width="480">
+</p>
 
 
-## Contributors
+## Creators
 
-Many thanks to __DIANA MARIA SIMION__ and __RAZVAN ANDREI MATISAN__ for this wonderful project and finest accuracy!!!
+Many thanks to [Diana Maria Simion](https://github.com/dianasimion) and [Razvan Andrei Matisan](https://github.com/razvanmatisan) for this wonderful project and finest accuracy!!!
 
+## Contribution
 
+We appreciate any contribution to this project. We are looking forward to improving our game by introducing these features:
 
++ database that keeps the names of the users and their highest results
++ time accuracy
++ choosing the countdown at the beginning of the game
++ updating the list of words regularly
 
