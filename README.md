@@ -3,7 +3,7 @@
 <img src="background.jpeg" width="480">
 </p>
 
-## 
+__This is a Pygame-Typing-Speed-Test, a game that tests your typing skills.__
 
 ## Installation (on Ubuntu/Linux)
 
@@ -59,7 +59,7 @@ __Now you are ready to begin!__
 
 ## Creators
 
-Many thanks to [Diana Maria Simion](https://github.com/dianasimion) and [Razvan Andrei Matisan](https://github.com/razvanmatisan) for this wonderful project and finest accuracy!!!
+Many thanks to [Diana Maria Simion](https://github.com/dianasimion) and [Razvan-Andrei Matisan](https://github.com/razvanmatisan) for this wonderful project and finest accuracy!!!
 
 ## Contribution
 
