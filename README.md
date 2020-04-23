@@ -69,4 +69,3 @@ We appreciate any contribution to this project. We are looking forward to improv
 + time accuracy
 + choosing the countdown at the beginning of the game
 + updating the list of words regularly
-
