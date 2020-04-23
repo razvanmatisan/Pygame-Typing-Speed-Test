@@ -10,8 +10,11 @@ __This is a Pygame-Typing-Speed-Test, a game that tests your typing skills.__
 Before you run the game, you need to be sure you have installed Python3 and Pygame. In case you haven't, here are some simple instructions to follow: 
 
  1. Install Python3:  __`sudo apt-get install python3`__
- 2. Install Pygame: __`sudo apt-get install python-pygame`__
-
+ 2. Install Pygame using:
+  + __`sudo apt-get install python3-pip python3-dev`__
+  + __`sudo pip3 install pygame`__
+    
+ 
 
 ## Running the program (on Ubuntu/Linux)
 
