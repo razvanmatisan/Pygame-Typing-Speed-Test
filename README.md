@@ -15,21 +15,19 @@ Before you run the game, you need to be sure you have installed Python3 and Pyga
 
 There are few steps left before your journey begins. Make sure to follow the next steps: 
 
- 1. __`git clone `__
-cd ...
-python3 ...
-Use the command in terminal: __`python3 typing-speed-test.py`__
+ 1. Clone the repo: __`git clone https://github.com/razvanmatisan/Pygame-Typing-Speed-Test.git`__
+ 2. Go to the directory you cloned the repo (in your terminal)
+ 3. Use the command in terminal: __`python3 typing-speed-test.py`__
 
 
 ## How to test your typing skills - instructions
 
+Now you are ready to begin! 
 
 
-START
-Use the command in terminal: __`python3 typing-speed-test.py`__
-1. Press Start
+1. On the screen title, press START
 
-* insert photo * 
+
 
 
 2. Press inside the border to start the game
@@ -40,6 +38,7 @@ Use the command in terminal: __`python3 typing-speed-test.py`__
 
 4. Check your results and try again if you want to __improve your score!!!!!!!!!!!!!!!!!__
 -> The number of completely correct words are saved until you close the game ?
+
 
 ## Struture of the project
 
